@@ -1,11 +1,13 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack from 'webpack';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 
 type Mode = 'production' | 'development';
 
 interface EnvVariables {
   mode: Mode;
+  port: number;
 }
 
 export default (env: EnvVariables) => {
@@ -35,6 +37,11 @@ export default (env: EnvVariables) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'], //вказуємо розширення які потрібно опрацювати
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+      port: env.port ?? 3000,
+      open: true,
     },
   };
 
